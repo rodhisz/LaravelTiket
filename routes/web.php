@@ -20,11 +20,7 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Route::get('/dashboard', function () {
-    return view ('/dashboard',[
-        'tiket' => Tiket::all()
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [TiketController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,5 +29,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('tiket', TiketController::class);
+Route::get('/scan', [TiketController::class, 'scan'])->name('scan')->middleware('auth');
 
 require __DIR__.'/auth.php';

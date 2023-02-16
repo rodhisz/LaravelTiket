@@ -20,7 +20,7 @@
     </div>
 
     <div class="container">
-        <form action="{{}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('tiket.update', $tiket->id)}}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">

@@ -14,7 +14,9 @@ class TiketController extends Controller
      */
     public function index()
     {
-        //
+        return view ('/dashboard',[
+            'tiket' => Tiket::orderBy('id','desc')->get()
+        ]);
     }
 
     /**
@@ -64,11 +66,16 @@ class TiketController extends Controller
      * @param  \App\Models\Tiket  $tiket
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tiket $tiket)
+    public function edit($id)
     {
-        if(auth()->user()->role == 'user'){
-            abort(403);
-        }
+        // if(auth()->user()->role == 'user'){
+        //     abort(403);
+        // }
+        // return view('edit',[
+        //     'tiket'=> $tiket
+        // ]);
+
+        $tiket = Tiket::find($id);
         return view('edit',[
             'tiket'=> $tiket
         ]);
@@ -81,15 +88,16 @@ class TiketController extends Controller
      * @param  \App\Models\Tiket  $tiket
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tiket $tiket)
+    public function update(Request $request, $id)
     {
+        $tiket = Tiket::find($id);
         $validasi = $request->validate([
             'nama' => 'required',
             'nomor' => 'required',
             'jumlah' => 'required'
         ]);
 
-        Tiket::where('id', $tiket->id)->update($validasi);
+        $tiket->update($validasi);
         return redirect('/dashboard');
     }
 
@@ -101,16 +109,17 @@ class TiketController extends Controller
      */
     public function destroy($id)
     {
-        // if(auth()->user()->role == 'user'){
-        //     abort(403);
-        // }
-
-        // Tiket::destroy('id', $tiket->id);
-        // return view('edit');
-
         $tiket = Tiket::find($id);
         $tiket->delete();
 
         return back();
     }
+
+    public function scan(Request $request)
+    {
+        $keyword = $request->search;
+        $tiket = Tiket::where('kode', 'like', "%" . $keyword . "%");
+        return view('scan', compact('tiket'));
+    }
+
 }

@@ -11,6 +11,7 @@
             <div class="row">
                 <div class="col-12">
                     <a class="btn btn-warning" href="{{ url('/') }}"> <- Landing</a>
+                    <a class="btn btn-primary" href="{{ url('/scan') }}"> Scan</a>
                 </div>
             </div>
         </div>
