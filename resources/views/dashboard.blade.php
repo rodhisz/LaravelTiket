@@ -48,10 +48,10 @@
                                 <td>{{ $row->jumlah }}</td>
                                 <td>{{ $row->kode }}</td>
                                 <td>
-                                    <form action="/tiket/{{ $row->id }}" method="post" class="d-inline">
+                                    <form action="{{ route('tiket.destroy', $row->id) }}" method="post" class="d-inline">
                                         @csrf
                                         @method('delete')
-                                        <a href="/tiket/{{ $row->id }}/edit" class="btn btn-warning">Edit</a>
+                                        <a href="{{ route('tiket.edit', $row->id) }}" class="btn btn-warning">Edit</a>
                                         <button class="btn btn-danger">Delete</button>
                                     </form>
                                 </td>

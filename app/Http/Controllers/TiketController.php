@@ -91,6 +91,7 @@ class TiketController extends Controller
     public function update(Request $request, $id)
     {
         $tiket = Tiket::find($id);
+        
         $validasi = $request->validate([
             'nama' => 'required',
             'nomor' => 'required',
